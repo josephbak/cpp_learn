@@ -9,6 +9,11 @@ struct Point {
     Point operator+(const Point &rhs) {
         return Point(x + rhs.x, y + rhs.y);
     }
+    Point& operator+=(const Point &rhs) {
+        x += rhs.x;
+        y += rhs.y;
+        return *this;
+    }
 
     void print() {
         std::cout << "x =  " << x << '\n';
@@ -25,6 +30,8 @@ int main() {
 
     p3.print();
 
+    p1 += p2;
+    p1.print();
 
     return 0;
 }
