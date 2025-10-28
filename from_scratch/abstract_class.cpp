@@ -1,9 +1,7 @@
 #include <iostream>
 
 struct Animal {
-    virtual void speak() {
-        std::cout << "Default speak function!\n";
-    }
+    virtual void speak() = 0;
 };
 
 struct Dog : Animal {
@@ -23,6 +21,9 @@ int main() {
     d.speak();
     Cat c;
     c.speak();
+
+    // Animal a;
+    // a.speak();
 
     Animal &a1 = d;
     a1.speak();
