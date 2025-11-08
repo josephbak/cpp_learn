@@ -1,0 +1,30 @@
+# 1 "node.cpp"
+# 1 "<built-in>" 1
+# 1 "<built-in>" 3
+# 537 "<built-in>" 3
+# 1 "<command line>" 1
+# 1 "<built-in>" 2
+# 1 "node.cpp" 2
+# 1 "./node.hpp" 1
+
+
+
+class Node {
+private:
+    int m_data;
+    Node* next;
+public:
+    Node(int data);
+    ~Node();
+    int getData() const;
+    Node* getNext() const;
+    void setNext(Node* n);
+};
+# 2 "node.cpp" 2
+
+Node::Node(int data) : m_data{data}, next(nullptr) {}
+Node::~Node() = default;
+
+int Node::getData() const { return m_data; }
+Node* Node::getNext() const { return next; }
+void Node::setNext(Node* n) { next = n; }
