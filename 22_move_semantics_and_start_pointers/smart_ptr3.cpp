@@ -21,6 +21,7 @@ public:
 		// We don't need to delete m_ptr here.  This constructor is only called when we're creating a new object, and m_ptr can't be set prior to this.
 		m_ptr = a.m_ptr; // transfer our dumb pointer from the source to our local object
 		a.m_ptr = nullptr; // make sure the source no longer owns the pointer
+		std::cout << "Copy constructor is invoked" << std::endl;
 	}
 
 	// An assignment operator that implements move semantics
@@ -32,6 +33,8 @@ public:
 		delete m_ptr; // make sure we deallocate any pointer the destination is already holding first
 		m_ptr = a.m_ptr; // then transfer our dumb pointer from the source to the local object
 		a.m_ptr = nullptr; // make sure the source no longer owns the pointer
+		std::cout << "Operator overload is invoked" << std::endl;
+
 		return *this;
 	}
 
@@ -56,6 +59,8 @@ int main()
 	std::cout << "res2 is " << (res2.isNull() ? "null\n" : "not null\n");
 
 	res2 = res1; // res2 assumes ownership, res1 is set to null
+	// Auto_ptr2<Resource> res2(res1); // Start as nullptr
+
 
 	std::cout << "Ownership transferred\n";
 
