@@ -7,8 +7,8 @@ struct Pair
 
 // Here's a deduction guide for our Pair (needed in C++17 only)
 // Pair objects initialized with arguments of type T and U should deduce to Pair<T, U>
-// template <typename T, typename U>
-// Pair(T, U) -> Pair<T, U>;
+template <typename T, typename U>
+Pair(T, U) -> Pair<T, U>;
 
 int main()
 {
