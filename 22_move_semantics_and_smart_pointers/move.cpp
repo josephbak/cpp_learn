@@ -8,6 +8,7 @@ public:
 	Auto_ptr3(T* ptr = nullptr)
 		: m_ptr { ptr }
 	{
+		std::cout << "Regular constructed\n";
 	}
 
 	~Auto_ptr3()
@@ -21,6 +22,7 @@ public:
 	{
 		m_ptr = new T;
 		*m_ptr = *a.m_ptr;
+		std::cout << "Copy constructed\n";
 	}
 
 	// Copy assignment
@@ -37,6 +39,8 @@ public:
 		// Copy the resource
 		m_ptr = new T;
 		*m_ptr = *a.m_ptr;
+
+		std::cout << "Copy assigned\n";
 
 		return *this;
 	}
@@ -61,7 +65,10 @@ Auto_ptr3<Resource> generateResource()
 
 int main()
 {
+	std::cout << "skip1\n";
 	Auto_ptr3<Resource> mainres;
+	std::cout << "skip2\n";
+
 	mainres = generateResource(); // this assignment will invoke the copy assignment
 
 	return 0;
