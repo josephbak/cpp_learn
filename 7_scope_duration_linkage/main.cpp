@@ -1,10 +1,8 @@
-#include <iostream>
-
-int add(int x, int y); // forward declaration for function add
+void sayHi(); // forward declaration for function sayHi, makes sayHi accessible in this file
 
 int main()
 {
-    std::cout << add(3, 4) << '\n';
+    sayHi(); // call to function defined in another file, linker will connect this call to the function definition
 
     return 0;
 }
