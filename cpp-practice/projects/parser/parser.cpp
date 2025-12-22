@@ -32,37 +32,45 @@ std::unique_ptr<Expr> Parser::parsePrimary() {
     if (isAtEnd()) {
         throw std::runtime_error("Unexpected end of input");
     }
+
     Token curr = advance();
+
     if (curr.type == TokenType::NUMBER) {
         return std::make_unique<NumberExpr>(std::stod(curr.value));
     } else if (curr.type == TokenType::IDENTIFIER) {
         return std::make_unique<VariableExpr>(curr.value);
+    } else if (curr.type == TokenType::LPAREN) {
+        std::unique_ptr<Expr> expr = parseExpression();
+
+        if (peek().type != TokenType::RPAREN) {
+            throw std::runtime_error("Expected ')'");
+        }
+
+        advance(); // consumes )
+        return expr;
     }
+
     throw std::runtime_error("Unexpected token: " + curr.value);
 }
 
-std::unique_ptr<Expr> Parser::parse() {
-    /*
-    std::unique_ptr<Expr> res;
-    char op;
-    while (!isAtEnd()) {
-        if ((peek().type == TokenType::PLUS) || (peek().type == TokenType::MINUS)) {
-            op = advance().value[0];
-        } else {
-            if (!res) {
-                // first element
-                res = std::move(parsePrimary());
-            } else {
-                res = std::make_unique<BinaryExpr>(op, std::move(res), parsePrimary());
-            }
-        }
-    }
-    return res;
-    */
-    std::unique_ptr<Expr> left = parsePrimary();
+std::unique_ptr<Expr> Parser::parseExpression() {
+    std::unique_ptr<Expr> left = parseTerm();
     while ((peek().type == TokenType::PLUS) || (peek().type == TokenType::MINUS)) {
+        char op = advance().value[0];
+        left = std::make_unique<BinaryExpr>(op, std::move(left), parseTerm());
+    }
+    return left;
+}
+
+std::unique_ptr<Expr> Parser::parseTerm() {
+    std::unique_ptr<Expr> left = parsePrimary();
+    while ((peek().type == TokenType::STAR) || (peek().type == TokenType::SLASH)) {
         char op = advance().value[0];
         left = std::make_unique<BinaryExpr>(op, std::move(left), parsePrimary());
     }
     return left;
+}
+
+std::unique_ptr<Expr> Parser::parse() {
+    return parseExpression();
 }

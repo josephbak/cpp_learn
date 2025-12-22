@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <string>
 #include <vector>
 #include "token.hpp"
@@ -17,5 +18,7 @@ class Parser {
 public:
     Parser(const std::vector<Token>& toks);
     std::unique_ptr<Expr> parse();
+    std::unique_ptr<Expr> parseExpression(); // handles +, -
     std::unique_ptr<Expr> parsePrimary();  // number OR variable
+    std::unique_ptr<Expr> parseTerm(); // handles *, /
 };

@@ -1,3 +1,9 @@
+#include <iostream>
+#include <vector>
+#include "token.hpp"
+#include "ast.hpp"
+#include "parser.hpp"
+
 // int main() {
     // Manually build: 1 + 2
     // auto one = std::make_unique<NumberExpr>(1);
@@ -5,13 +11,6 @@
     // auto add = std::make_unique<BinaryExpr>('+', std::move(one), std::move(two));
     // add->print();
 // }
-
-
-#include <iostream>
-#include <vector>
-#include "token.hpp"
-#include "ast.hpp"
-#include "parser.hpp"
 
 int main() {
     // Test 1: Parse number
@@ -41,14 +40,35 @@ int main() {
     // } catch (const std::runtime_error& e) {
     //     std::cerr << e.what() << std::endl;
     // }
-    std::vector<Token> tokens = {
-    {TokenType::NUMBER, "1", 1, 1},
-    {TokenType::PLUS, "+", 1, 3},
-    {TokenType::NUMBER, "2", 1, 5},
-    {TokenType::PLUS, "+", 1, 7},
-    {TokenType::NUMBER, "3", 1, 9},
-    {TokenType::END, "", 1, 10}
-    };
+
+    // std::vector<Token> tokens = {
+    // {TokenType::NUMBER, "1", 1, 1},
+    // {TokenType::PLUS, "+", 1, 3},
+    // {TokenType::NUMBER, "2", 1, 5},
+    // {TokenType::PLUS, "+", 1, 7},
+    // {TokenType::NUMBER, "3", 1, 9},
+    // {TokenType::END, "", 1, 10}
+    // };
+
+//     std::vector<Token> tokens = {
+//     {TokenType::NUMBER, "1", 1, 1},
+//     {TokenType::PLUS, "+", 1, 3},
+//     {TokenType::NUMBER, "2", 1, 5},
+//     {TokenType::STAR, "*", 1, 7},
+//     {TokenType::NUMBER, "3", 1, 9},
+//     {TokenType::END, "", 1, 10}
+// };
+
+std::vector<Token> tokens = {
+    {TokenType::LPAREN, "(", 1, 1},
+    {TokenType::NUMBER, "1", 1, 2},
+    {TokenType::PLUS, "+", 1, 4},
+    {TokenType::NUMBER, "2", 1, 6},
+    {TokenType::RPAREN, ")", 1, 7},
+    {TokenType::STAR, "*", 1, 9},
+    {TokenType::NUMBER, "3", 1, 11},
+    {TokenType::END, "", 1, 12}
+};
 
     Parser p(tokens);
     auto ast = p.parse();
